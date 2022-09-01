@@ -1,5 +1,7 @@
 # Шаблон уведомления для статуса 'Новый'
 
+Скопируйте код и вставьте его в поле сообщения для мессенджеров.
+
 ```
 Заказ на сайте {{ account.title }} {{shop_url | remove_first: "https://"}} - №{{ order.number }} от {{ order.creation_date | date: "%d.%m.%Y" }}
 Клиент: {{ order.client.name }} {{ order.client.phone}}
