@@ -25,19 +25,10 @@
 
 Замените значение `order.delivery_title == 'Самовывоз из магазина (м. Владыкино)'` на ваше название способа доставки для самовывоза и измените текст с адресом и ссылкой на карту с координатами вашего офиса.
 
-В коде используется проверка и подстановка текста, если заказ доставляется служюой Via.Delivery вы можете убрать эту часть кода.
-
-Сообщение в коде представленно с длинными строками, чтобы не было ненужных переносов строк при отправке сообщения клиенту.
+Сообщение в коде представленно в виде одной длинной строки, чтобы не было ненужных переносов строк при отправке сообщения клиенту.
 
 
 ```
-{% capture order_date %}{{ order.creation_date | date: '%Y%j' }}{% endcapture %}{% capture order_days %}{{ 'now' | date: '%Y%j' | minus: order_date }}{% endcapture %}{% assign order_days2 = order_days | plus: 0 %}{% if order_days2 < 7 %}{% if order.delivery_title != "Самовывоз из магазина (м. Владыкино)" %}Ваш заказ №{{ order.number }} в интернет-магазине {{account.main_host}} уже в пути! 
-		{% if order.delivery_title != "Via.Delivery – пункт выдачи рядом с домом" %}{% if order.delivery_date? %}Ожидаемая дата доставки: {{ order.delivery_date }}{% endif %}
-		Способ получения товара: {{order.delivery_description | strip_html}} {{ order.shipping_address.delivery_address }}
-		{% endif %}{% if order.delivery_title contains "Via.Delivery" %}
-		Вы можете отследить посылку по номеру вашего заказа: {{ order.number }} на сайте https://viadelivery.ru/tracking или по телефону +7(495)118-0964
-		{% endif %}{% if order.all_fields['Трекинг номер заказа в службе доставки'].value != '' %}Трекинг-код вашего заказа: {{ order.all_fields['Трекинг номер заказа в службе доставки'].value }}{% endif %}{% endif %}
-	Если у вас есть вопросы по заказу или доставке, пожалуйста, позвоните нам по бесплатному номеру 8(800)55-16-163 или напишите в этот чат.
-{% endif %}
+{% capture order_date %}{{ order.creation_date | date: '%Y%j' }}{% endcapture %}{% capture order_days %}{{ 'now' | date: '%Y%j' | minus: order_date }}{% endcapture %}{% assign order_days2 = order_days | plus: 0 %}{% if order_days2 < 7 %}Ваш заказ №{{ order.number }} в интернет-магазине {{account.main_host }} на сумму {{ order.total_price | money | remove: '&nbsp;'}} уже собран и{% if order.delivery_title == 'Самовывоз из магазина (м. Владыкино)'  %} ожидает вас в офисе по адресу: г. Москва Алтуфьевское шоссе 1, офис 230. Карта: https://yandex.ru/maps/-/CCUFvCFU0D. У нас действует пропускная система. Пожалуйста, отправьте в чат ваше ФИО или номер машины и дату визита для заказа пропуска. Ждём вас с понедельника по пятницу с 10 до 20 часов{% else %} скоро будет передан в службу доставки.{% endif %}{% endif %}
 
 ```
