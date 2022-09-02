@@ -27,6 +27,7 @@
 
 Сообщение в коде представленно в виде одной длинной строки, чтобы не было ненужных переносов строк при отправке сообщения клиенту.
 
+## Шаблон сообщения
 
 ```
 {% capture order_date %}{{ order.creation_date | date: '%Y%j' }}{% endcapture %}{% capture order_days %}{{ 'now' | date: '%Y%j' | minus: order_date }}{% endcapture %}{% assign order_days2 = order_days | plus: 0 %}{% if order_days2 < 7 %}Ваш заказ №{{ order.number }} в интернет-магазине {{account.main_host }} на сумму {{ order.total_price | money | remove: '&nbsp;'}} уже собран и{% if order.delivery_title == 'Самовывоз из магазина (м. Владыкино)'  %} ожидает вас в офисе по адресу: г. Москва Алтуфьевское шоссе 1, офис 230. Карта: https://yandex.ru/maps/-/CCUFvCFU0D. У нас действует пропускная система. Пожалуйста, отправьте в чат ваше ФИО или номер машины и дату визита для заказа пропуска. Ждём вас с понедельника по пятницу с 10 до 20 часов{% else %} скоро будет передан в службу доставки.{% endif %}{% endif %}
