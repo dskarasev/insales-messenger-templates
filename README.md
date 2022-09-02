@@ -8,6 +8,7 @@
 [Шаблон для статуса "Новый"](new.md)  
 [Шаблон для статуса "Согласован"](confirmed.md)  
 [Шаблон для статуса "Отгружен"](sent.md)  
+[Шаблон для статуса "Готов к выдаче на ПВЗ"](atpvz.md)  
 
 
 Donations and contributions are welcome ;)
