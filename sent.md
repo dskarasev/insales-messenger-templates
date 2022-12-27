@@ -1,4 +1,4 @@
-# Шаблон уведомления для статуса 'Отгружен'
+# Шаблон уведомления для статуса 'В Пути'
 
 В данном шаблоне используется проверка на дату создания заказа. Статус высылается только в том случае, если заказ создан не более 7 дней назад. Это сделано для того, чтобы платформа не рассылала сообщения по старым заказам, в случае изменения их статуса.
 
@@ -37,9 +37,9 @@
 
 ## Шаблон сообщения
 ```
-{% capture order_date %}{{ order.creation_date | date: '%Y%j' }}{% endcapture %}{% capture order_days %}{{ 'now' | date: '%Y%j' | minus: order_date }}{% endcapture %}{% assign order_days2 = order_days | plus: 0 %}{% if order_days2 < 7 %}{% if order.delivery_title != "Самовывоз из магазина (м. Владыкино)" %}Ваш заказ №{{ order.number }} в интернет-магазине {{account.main_host}} уже в пути! 
+{% capture order_date %}{{ order.creation_date | date: '%Y%j' }}{% endcapture %}{% capture order_days %}{{ 'now' | date: '%Y%j' | minus: order_date }}{% endcapture %}{% assign order_days2 = order_days | plus: 0 %}{% if order_days2 < 7 %}{% if order.delivery_title != "Самовывоз из магазина (м. Владыкино)" %}{% if order.client.name %}{{order.client.name}}, {% endif %}Ваш заказ №{{ order.number }} в интернет-магазине {{account.main_host}} уже в пути! 
 		{% if order.delivery_title != "Via.Delivery – пункт выдачи рядом с домом" %}{% if order.delivery_date? %}Ожидаемая дата доставки: {{ order.delivery_date }}{% endif %}
-		Способ получения товара: {{order.delivery_description | strip_html}} {{ order.shipping_address.delivery_address }}
+		Способ получения товара: {{order.delivery_title | strip_html}} {{ order.shipping_address.delivery_address }}
 		{% endif %}{% if order.delivery_title contains "Via.Delivery" %}
 		Вы можете отследить посылку по номеру вашего заказа: {{ order.number }} на сайте https://viadelivery.ru/tracking или по телефону +7(495)118-0964
 		{% endif %}{% if order.all_fields['Трекинг номер заказа в службе доставки'].value != '' %}Трекинг-код вашего заказа: {{ order.all_fields['Трекинг номер заказа в службе доставки'].value }}{% endif %}{% endif %}
